@@ -1,0 +1,42 @@
+<!-- Make sure you keep ng-controller="NavCtrl" -->
+<!-- Once this template hits the DOM, you need to declare what ctrl it uses -->
+<nav class="navbar navbar-default" ng-controller="NavCtrl">
+
+  <div class="container-fluid">
+
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Todo App</a>
+    </div>
+
+    <!-- SEARCH BAR -->
+    <div class="col-xs-6 searchBox" ng-show="isActive('/items/list')">
+      <div class="input-group">
+        <span class="input-group-btn">
+          <button class="btn btn-default"><i class="fa fa-search" aria-hidden="true"></i></button>
+        </span>
+        <!-- TODO: Bind the input to our todo list -->
+        <input type="text" class="form-control" placeholder="Search for..." ng-model="searchText.search">
+      </div>
+    </div>
+    <!-- END SEARCH BAR -->
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <!-- TODO: Use Angular to loop through nav items -->
+      <ul class="nav navbar-nav navbar-right">
+        <!-- <li><a href="{{item.url}}" ng-show="{{item.showState}}">{{item.name}}</a></li> -->
+        <li ng-show="!$parent.isLoggedIn"><a ng-href="#/login">Login</a></li>
+        <li ng-show="$parent.isLoggedIn"><a ng-href="#/items/new">New Items</a></li>
+        <li ng-show="$parent.isLoggedIn"><a ng-href="#/items/list">All Items</a></li>
+        <li ng-show="$parent.isLoggedIn" ng-click="logout()"><a>Logout</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+
+  </div><!-- /.container-fluid -->
+</nav>
