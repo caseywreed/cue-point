@@ -2,8 +2,7 @@
 
 //Two args: Name of Module, Array of Dependencies
 // Just like var ng-route = require("app/js/etc.js")
-var app = angular.module("TodoApp", ["ngRoute"])
-// .constant("FirebaseURL", "https://angular-todo-fa439.firebaseio.com/")
+var app = angular.module("CueApp", ["ngRoute"])
 
 
 // let isAuth = (AuthFactory) => new Promise ( (resolve, reject) => {
