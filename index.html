@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Todo App</title>
-    <link rel="stylesheet" type="text/css" href="lib/bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <title>Cue Point</title>
     <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 
@@ -16,20 +14,15 @@
         <!-- BE CAREFUL -->
         <!-- BE CAREFUL -->
         <!-- Single quotes INSIDE double quotes! -->
-        <div ng-include="'partials/navbar.html'"></div>
+        <!-- <div ng-include="'partials/navbar.html'"></div> -->
 
-        <div class="row">
-          <div class="col-xs-10 col-xs-offset-1 main-container">
-            <div class="col-xs-12" ng-view></div>
-          </div>
-        </div>
+        <div ng-view></div>
+
 
     </div>
 
 <!-- Third Party Libs -->
 <script type="text/javascript" src="lib/bower_components/jquery/dist/jquery.min.js"></script>
-<script type="text/javascript" src="lib/bower_components/bootstrap/dist/js/bootstrap.min.js">
-</script>
 <script type="text/javascript" src="lib/bower_components/angular/angular.min.js"></script>
 <script type="text/javascript" src="lib/bower_components/angular-route/angular-route.min.js"></script>
 <!-- <script type="text/javascript" src="lib/bower_components/firebase/firebase.js"></script> -->
@@ -39,12 +32,11 @@
 
 <!-- Providers -->
 <script type="text/javascript" src="app/factories/AuthFactory.js"></script>
+<script type="text/javascript" src="app/values/DiscogsCreds.js"></script>
 
 <!-- Controllers -->
-<!-- <script type="text/javascript" src="app/controllers/TodoCtrl.js"></script> -->
-<script type="text/javascript" src="app/controllers/TopCtrl.js"></script>
-<script type="text/javascript" src="app/controllers/NavCtrl.js"></script>
 <script type="text/javascript" src="app/controllers/LoginCtrl.js"></script>
+<script type="text/javascript" src="app/controllers/TopCtrl.js"></script>
 
 </body>
 </html>
