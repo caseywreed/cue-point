@@ -1,11 +1,14 @@
 "use strict";
 
-app.controller("LoginCtrl", function ($scope, AuthFactory) {
+app.controller("DiscogsLoginCtrl", function ($scope, $location, AuthFactory) {
+
+    $scope.userVerifier = {
+        key: ""
+    }
 
     $scope.loginToDiscogs = function () {
         console.log("loginToDiscogs running")
         AuthFactory.discogsAuthCall()
     }
-
 
 })

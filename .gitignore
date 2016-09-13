@@ -3,3 +3,4 @@ lib/node_modules
 lib/.sass-cache
 css/
 app/values/DiscogsCreds.js
+app/values/FBCreds.js

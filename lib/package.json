@@ -2,6 +2,7 @@
   "name": "cue-point",
   "version": "0.1.0",
   "devDependencies": {
+    "firebase": "^3.3.2",
     "grunt": "^0.4.5",
     "grunt-contrib-jshint": "^0.11.2",
     "grunt-contrib-nodeunit": "~0.4.1",
@@ -13,4 +14,3 @@
     "matchdep": "^0.3.0"
   }
 }
-
