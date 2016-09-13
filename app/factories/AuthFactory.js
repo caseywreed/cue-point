@@ -23,7 +23,7 @@ app.factory("AuthFactory", function ($q, $http, DiscogsCreds, $window, $location
     }
 
     let getUsername = function () {
-        return _username
+        return _userName
     }
 
     let createUser = function (userObj) {
