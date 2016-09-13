@@ -1,6 +1,6 @@
 "use strict";
 
-app.controller("LoginCtrl", function ($scope, $location, AuthFactory) {
+app.controller("DiscogsLoginCtrl", function ($scope, $location, AuthFactory) {
 
     $scope.userVerifier = {
         key: ""

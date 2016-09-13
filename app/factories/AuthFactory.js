@@ -16,7 +16,25 @@ app.factory("AuthFactory", function ($q, $http, DiscogsCreds, $window, $location
         return _uid
     }
 
-    // GET TIMESTAMP UNIQUE
+    let createUser = function (userObj) {
+        return firebase.auth().createUserWithEmailAndPassword(userObj.email, userObj.password)
+        .catch(function (error) {
+            let errorCode = error.code
+            let errorMessage = error.message
+            // ..... more later
+        })
+    }
+
+    let loginUser = function (userObj) {
+        return firebase.auth().signInWithEmailAndPassword(userObj.email, userObj.password)
+        .catch( function (error) {
+            let errorCode = error.code
+            let errorMessage = error.message
+            console.log("errorCode", errorCode)
+            console.log("errorMessage", errorMessage)
+            // ..... more error handling later
+        })
+    }
 
     let discogsAuthCall = () => {
         console.log("discogsAuthCall running")
@@ -44,10 +62,6 @@ app.factory("AuthFactory", function ($q, $http, DiscogsCreds, $window, $location
         })
     }
 
-    //Leaving off here. Getting a 401 while trying to authorize
-    //Has to be a better way to do this
-    //Lots of progress, though
-
     let discogsVerifyCall = (userVerifyKey) => {
         console.log("discogsVerify running")
         console.log("userVerifyKey", userVerifyKey)
@@ -73,12 +87,8 @@ app.factory("AuthFactory", function ($q, $http, DiscogsCreds, $window, $location
         })
     }
 
-    // https://api.discogs.com/oauth/access_token?oauth_consumer_key=RLNRPrabhetprjFlZgUt&oauth_signature_method=PLAINTEXT&oauth_timestamp=1473357998&oauth_nonce=UeA0pl&oauth_version=1.0&oauth_signature=kuwUTbYZgyBKdsqfpdIRTfvxIFwAWbMw%26
-
-// I KNOW this can be done better with .map()
-// but I'll figure that out later
-
     let setInitialUserTokens = (tokens) => {
+        console.log("setInitialUserTokens running")
         let splitTokens = tokens.split("&")
         let tempTokenArray = []
         splitTokens.forEach( function (token) {
@@ -87,11 +97,12 @@ app.factory("AuthFactory", function ($q, $http, DiscogsCreds, $window, $location
         })
         userTokens.oauth_token_secret = tempTokenArray[0]
         userTokens.oauth_token = tempTokenArray[1]
-        // userTokens.uid = some sort of get UID function
+        userTokens.uid = _uid
         sendTokensToFirebase(userTokens)
     }
 
-    let sendTokensToFirebase = (pinObj) => {
+    let sendTokensToFirebase = () => {
+        console.log("sending tokens to Firebase")
         return $q((resolve,reject) => {
             $http.post('https://cue-point.firebaseio.com/users.json', userTokens)
             .then((data) => {
@@ -103,6 +114,6 @@ app.factory("AuthFactory", function ($q, $http, DiscogsCreds, $window, $location
         })
     }
 
-    return {setUid, getUid, discogsAuthCall, discogsVerifyCall}
+    return {setUid, getUid, createUser, loginUser, discogsAuthCall, discogsVerifyCall}
 
 })
