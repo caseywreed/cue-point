@@ -31,6 +31,7 @@ app.controller("CueLoginCtrl", function ($scope, $window, $location, AuthFactory
             $window.location.href = "#/discogs-login"
             AuthFactory.setUid(data.uid)
             } else {
+            console.log("inside login's ELSE block")
             $window.location.href = "#/login"
             }
         })
@@ -39,15 +40,19 @@ app.controller("CueLoginCtrl", function ($scope, $window, $location, AuthFactory
     // TO DO: MAKE AN IF/THEN FOR IF THE URL DOESN'T CONTAIN
     // THE AUTH KEY
 
+    // $scope.credsChecker = () => {
+    //     if (!) {
+    //         checkForAuthToken()
+    //     }
+    // }
+
     $scope.checkForAuthToken = function () {
         console.log("checkForAuthToken running")
-        console.log("location", $location)
         let url = $location.$$absUrl
         let splitUrl = url.split("&")
         let verifyToken = splitUrl[1].split("#")
         let userVerifyCode = verifyToken[0].split("=")
         let finalUserVerifyCode = userVerifyCode[1]
-        console.log("finalUserVerifyCode", finalUserVerifyCode)
         AuthFactory.getTokensFromFirebase()
         .then(function (data) {
             $scope.appTokens = data.data
@@ -60,7 +65,7 @@ app.controller("CueLoginCtrl", function ($scope, $window, $location, AuthFactory
                 AuthFactory.discogsVerifyCall(oauthToken[0], finalUserVerifyCode)
             })
         })
-        // $location.url("/discogs-login")
+        $window.location.href = `/#/main`;
     }
 
 

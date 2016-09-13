@@ -11,9 +11,4 @@ app.controller("DiscogsLoginCtrl", function ($scope, $location, AuthFactory) {
         AuthFactory.discogsAuthCall()
     }
 
-    // TO DO: MAKE AN IF/THEN FOR IF THE URL DOESN'T CONTAIN
-    // THE AUTH KEY
-
-
-
 })

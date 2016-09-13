@@ -16,6 +16,10 @@ app.config(function ($routeProvider) {
             templateUrl: "partials/cuepoint-login.html",
             controller: "CueLoginCtrl"
         }).
+        when("/main", {
+            templateUrl: "partials/main.html",
+            controller: "MainMenuCtrl"
+        }).
         otherwise('/')
 })
 

@@ -64,8 +64,6 @@ app.factory("AuthFactory", function ($q, $http, DiscogsCreds, $window, $location
 
     let discogsVerifyCall = (oauthToken, userVerifyKey) => {
         console.log("discogsVerify running")
-        console.log("userVerifyKey", userVerifyKey)
-        console.log("oauthToken in verify call", oauthToken)
         _uid = oauthToken.uid
         let timestamp = Date.now()
         return $q((resolve, reject) => {
@@ -156,7 +154,6 @@ app.factory("AuthFactory", function ($q, $http, DiscogsCreds, $window, $location
             "oauth_token_secret": oauth_token_secret_split,
             "uid": _uid
         }
-        console.log("userAuthTokens", userAuthTokens)
         return $q((resolve,reject) => {
             $http.post('https://cue-point.firebaseio.com/userTokens.json', userAuthTokens)
             .then((data) => {
