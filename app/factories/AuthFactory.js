@@ -66,6 +66,7 @@ app.factory("AuthFactory", function ($q, $http, DiscogsCreds, $window, $location
         console.log("discogsVerify running")
         console.log("userVerifyKey", userVerifyKey)
         console.log("oauthToken in verify call", oauthToken)
+        _uid = oauthToken.uid
         let timestamp = Date.now()
         return $q((resolve, reject) => {
             $http({
@@ -80,6 +81,7 @@ app.factory("AuthFactory", function ($q, $http, DiscogsCreds, $window, $location
             })
             .success((data) => {
                 console.log(data)
+                sendUsersAuthTokensToFirebase(data)
                 resolve(data)
             })
             .error((error) => {
@@ -135,6 +137,29 @@ app.factory("AuthFactory", function ($q, $http, DiscogsCreds, $window, $location
             $http.get('https://cue-point.firebaseio.com/token.json')
             .then((data) => {
                 console.log(data)
+                resolve(data)
+            }),(error) => {
+                console.error(error)
+                reject(error)
+            }
+        })
+    }
+
+    let sendUsersAuthTokensToFirebase = (data) => {
+        console.log("sendUsersAuthTokensToFirebase running")
+        let tokenString = data
+        let splitTokenString = tokenString.split("&")
+        let oauth_token_secret_split = splitTokenString[0].split("=")[1]
+        let oauth_token_split = splitTokenString[1].split("=")[1]
+        let userAuthTokens = {
+            "oauth_token": oauth_token_split,
+            "oauth_token_secret": oauth_token_secret_split,
+            "uid": _uid
+        }
+        console.log("userAuthTokens", userAuthTokens)
+        return $q((resolve,reject) => {
+            $http.post('https://cue-point.firebaseio.com/userTokens.json', userAuthTokens)
+            .then((data) => {
                 resolve(data)
             }),(error) => {
                 console.error(error)
