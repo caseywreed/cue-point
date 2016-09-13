@@ -11,6 +11,7 @@ app.controller("MainMenuCtrl", function ($scope, AuthFactory) {
             let key = Object.keys(data)
             $scope.userAuthToken = data[key]
             console.log("$scope.userAuthToken from getUserAccessTokens", $scope.userAuthToken)
+            $scope.findUserIdentity()
         })
     }
 
@@ -18,7 +19,13 @@ app.controller("MainMenuCtrl", function ($scope, AuthFactory) {
         AuthFactory.findIdentity($scope.userAuthToken)
         .then( function (data) {
             console.log(data)
+            AuthFactory.setUsername(data.username)
         })
+    }
+
+    $scope.mainMenuInit = () => {
+        console.log("mainMenuInit running")
+        $scope.getUserAccessTokens()
     }
 
 })
