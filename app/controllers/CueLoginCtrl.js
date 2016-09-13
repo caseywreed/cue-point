@@ -37,15 +37,6 @@ app.controller("CueLoginCtrl", function ($scope, $window, $location, AuthFactory
         })
     }
 
-    // TO DO: MAKE AN IF/THEN FOR IF THE URL DOESN'T CONTAIN
-    // THE AUTH KEY
-
-    // $scope.credsChecker = () => {
-    //     if (!) {
-    //         checkForAuthToken()
-    //     }
-    // }
-
     $scope.checkForAuthToken = function () {
         console.log("checkForAuthToken running")
         let url = $location.$$absUrl
