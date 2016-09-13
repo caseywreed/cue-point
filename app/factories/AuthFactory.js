@@ -165,6 +165,20 @@ app.factory("AuthFactory", function ($q, $http, DiscogsCreds, $window, $location
         })
     }
 
-    return {setUid, getUid, createUser, loginUser, discogsAuthCall, discogsVerifyCall, deleteTokensFromFirebase, getTokensFromFirebase}
+    let getUserAuthToken = () => {
+        return $q((resolve,reject) => {
+            $http.get(`https://cue-point.firebaseio.com/userTokens.json?orderBy="uid"&equalTo="${_uid}"`)
+            .success((data) => {
+                console.log(data)
+                resolve(data)
+            })
+            .error( (error) => {
+                console.error(error)
+                reject(error)
+            })
+        })
+    }
+
+    return {setUid, getUid, createUser, loginUser, discogsAuthCall, discogsVerifyCall, deleteTokensFromFirebase, getTokensFromFirebase, getUserAuthToken}
 
 })
