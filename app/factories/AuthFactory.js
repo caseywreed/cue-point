@@ -62,20 +62,21 @@ app.factory("AuthFactory", function ($q, $http, DiscogsCreds, $window, $location
         })
     }
 
-    let discogsVerifyCall = (userVerifyKey) => {
+    let discogsVerifyCall = (oauthToken, userVerifyKey) => {
         console.log("discogsVerify running")
         console.log("userVerifyKey", userVerifyKey)
-        console.log("userTokens object", userTokens)
+        console.log("oauthToken in verify call", oauthToken)
         let timestamp = Date.now()
         return $q((resolve, reject) => {
             $http({
                 method: "GET",
-                url: "https://api.discogs.com/oauth/access_token?oauth_consumer_key=RLNRPrabhetprjFlZgUt&oauth_signature_method=PLAINTEXT&oauth_token="
-                + userTokens.oauth_token +
-                "&oauth_signature=kuwUTbYZgyBKdsqfpdIRTfvxIFwAWbMw%26&oauth_timestamp="
+                url: "https://api.discogs.com/oauth/access_token?oauth_verifier="
+                + userVerifyKey +
+                "&oauth_consumer_key=RLNRPrabhetprjFlZgUt&oauth_token="
+                + oauthToken.oauth_token +
+                "&oauth_signature_method=PLAINTEXT&oauth_timestamp="
                 + timestamp +
-                "&oauth_nonce=33u0UT&oauth_version=1.0&oauth_verifier="
-                + userVerifyKey
+                "&oauth_nonce=vRvMJk&oauth_version=1.0&oauth_signature=kuwUTbYZgyBKdsqfpdIRTfvxIFwAWbMw%26" + oauthToken.oauth_token_secret
             })
             .success((data) => {
                 console.log(data)
@@ -99,21 +100,49 @@ app.factory("AuthFactory", function ($q, $http, DiscogsCreds, $window, $location
         userTokens.oauth_token = tempTokenArray[1]
         userTokens.uid = _uid
         sendTokensToFirebase(userTokens)
+        console.log("userTokens", userTokens)
     }
 
     let sendTokensToFirebase = () => {
         console.log("sending tokens to Firebase")
         return $q((resolve,reject) => {
-            $http.post('https://cue-point.firebaseio.com/users.json', userTokens)
+            $http.post('https://cue-point.firebaseio.com/token.json', userTokens)
             .then((data) => {
                 resolve(data)
-                }),(error) => {
+            }),(error) => {
                 console.error(error)
                 reject(error)
-                }
+            }
         })
     }
 
-    return {setUid, getUid, createUser, loginUser, discogsAuthCall, discogsVerifyCall}
+    let deleteTokensFromFirebase = () => {
+        console.log("deleting tokens from Firebase")
+        return $q((resolve,reject) => {
+            $http.delete('https://cue-point.firebaseio.com/token.json')
+            .then((data) => {
+                resolve(data)
+            }),(error) => {
+                console.error(error)
+                reject(error)
+            }
+        })
+    }
+
+    let getTokensFromFirebase = () => {
+        console.log("getting tokens from Firebase")
+        return $q((resolve,reject) => {
+            $http.get('https://cue-point.firebaseio.com/token.json')
+            .then((data) => {
+                console.log(data)
+                resolve(data)
+            }),(error) => {
+                console.error(error)
+                reject(error)
+            }
+        })
+    }
+
+    return {setUid, getUid, createUser, loginUser, discogsAuthCall, discogsVerifyCall, deleteTokensFromFirebase, getTokensFromFirebase}
 
 })
