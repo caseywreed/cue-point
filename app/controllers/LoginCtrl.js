@@ -11,17 +11,10 @@ app.controller("LoginCtrl", function ($scope, $location, AuthFactory) {
         AuthFactory.discogsAuthCall()
     }
 
-    $scope.discogsVerify = function () {
-        console.log("discogsVerify running")
-        AuthFactory.discogsVerifyCall($scope.userVerifier.key)
-    }
-
-    // RUN THIS AS AN INIT EVERY TIME LOGIN PAGE LOADS!
+    // MAKE AN IF/THEN FOR IF THE URL DOESN'T CONTAIN
+    // THE AUTH KEY
 
     $scope.checkForAuthToken = function () {
-        // GRAB AUTH TOKEN
-        // SEND THE AUTH TOKEN TO STEP 4 OF DISCOGS LOGIN
-        // WITH DISCOGS VERIFY
         console.log("checkForAuthToken running")
         console.log("$location", $location)
         let url = $location.$$absUrl

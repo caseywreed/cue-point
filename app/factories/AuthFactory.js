@@ -51,21 +51,17 @@ app.factory("AuthFactory", function ($q, $http, DiscogsCreds, $window, $location
     let discogsVerifyCall = (userVerifyKey) => {
         console.log("discogsVerify running")
         console.log("userVerifyKey", userVerifyKey)
+        console.log("userTokens object", userTokens)
         let timestamp = Date.now()
         return $q((resolve, reject) => {
             $http({
                 method: "GET",
-                url: "https://api.discogs.com/oauth/access_token?oauth_consumer_key="
-                + DiscogsCreds.key +
-                "&oauth_signature_method=PLAINTEXT&oauth_token="
+                url: "https://api.discogs.com/oauth/access_token?oauth_consumer_key=RLNRPrabhetprjFlZgUt&oauth_signature_method=PLAINTEXT&oauth_token="
                 + userTokens.oauth_token +
-                "&oauth_timestamp="
+                "&oauth_signature=kuwUTbYZgyBKdsqfpdIRTfvxIFwAWbMw%26&oauth_timestamp="
                 + timestamp +
                 "&oauth_nonce=33u0UT&oauth_version=1.0&oauth_verifier="
-                + userVerifyKey +
-                "&oauth_signature="
-                + DiscogsCreds.oauth_signature +
-                "%26&oauth_callback=http://google.com" //This is the ampersand at the end of the secret!
+                + userVerifyKey
             })
             .success((data) => {
                 console.log(data)
@@ -76,6 +72,8 @@ app.factory("AuthFactory", function ($q, $http, DiscogsCreds, $window, $location
             })
         })
     }
+
+    // https://api.discogs.com/oauth/access_token?oauth_consumer_key=RLNRPrabhetprjFlZgUt&oauth_signature_method=PLAINTEXT&oauth_timestamp=1473357998&oauth_nonce=UeA0pl&oauth_version=1.0&oauth_signature=kuwUTbYZgyBKdsqfpdIRTfvxIFwAWbMw%26
 
 // I KNOW this can be done better with .map()
 // but I'll figure that out later
@@ -89,12 +87,22 @@ app.factory("AuthFactory", function ($q, $http, DiscogsCreds, $window, $location
         })
         userTokens.oauth_token_secret = tempTokenArray[0]
         userTokens.oauth_token = tempTokenArray[1]
+        // userTokens.uid = some sort of get UID function
+        sendTokensToFirebase(userTokens)
     }
 
-    let getUserVerifyCode = (url) => {
-        let splitUrl = url.split("$")
+    let sendTokensToFirebase = (pinObj) => {
+        return $q((resolve,reject) => {
+            $http.post('https://cue-point.firebaseio.com/users.json', userTokens)
+            .then((data) => {
+                resolve(data)
+                }),(error) => {
+                console.error(error)
+                reject(error)
+                }
+        })
     }
 
-    return {setUid, getUid, discogsAuthCall, discogsVerifyCall, getUserVerifyCode}
+    return {setUid, getUid, discogsAuthCall, discogsVerifyCall}
 
 })
