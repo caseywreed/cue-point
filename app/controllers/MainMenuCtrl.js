@@ -1,6 +1,6 @@
 "use strict";
 
-app.controller("MainMenuCtrl", function ($scope, AuthFactory) {
+app.controller("MainMenuCtrl", function ($scope, AuthFactory, DiscogsFactory) {
 
     $scope.userAuthToken = {}
 
@@ -26,6 +26,10 @@ app.controller("MainMenuCtrl", function ($scope, AuthFactory) {
     $scope.mainMenuInit = () => {
         console.log("mainMenuInit running")
         $scope.getUserAccessTokens()
+    }
+
+    $scope.addRickAstley = () => {
+        DiscogsFactory.addReleaseByNumber(249504, $scope.userAuthToken)
     }
 
 })
