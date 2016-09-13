@@ -3,4 +3,10 @@
     Catalog Number: <input type="text" name="" ng-model="searchTerm">
     <button ng-click="searchByCatNumber()">Search By Catalog Number</button>
     <button ng-click="addRickAstley()">Add Rick Astley To Your Collection</button>
+
+    <div ng-repeat="release in searchResultsArray">
+        <h6>{{release.title}}</h6>
+        <h6>{{release.year}}</h6>
+    </div>
+
 </div>

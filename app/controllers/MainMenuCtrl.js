@@ -4,6 +4,7 @@ app.controller("MainMenuCtrl", function ($scope, AuthFactory, DiscogsFactory) {
 
     $scope.userAuthToken = {}
     $scope.searchTerm = ""
+    $scope.searchResultsArray = []
 
     $scope.getUserAccessTokens = () => {
         console.log("getting user access tokens")
@@ -35,6 +36,10 @@ app.controller("MainMenuCtrl", function ($scope, AuthFactory, DiscogsFactory) {
 
     $scope.searchByCatNumber = () => {
         DiscogsFactory.searchByCatNumber($scope.searchTerm, $scope.userAuthToken)
+        .then(function (searchResults) {
+            $scope.searchResultsArray = searchResults.results
+            console.log("searchResultsArray", $scope.searchResultsArray)
+        })
     }
 
 })
