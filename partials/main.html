@@ -5,9 +5,11 @@
     <button ng-click="addRickAstley()">Add Rick Astley To Your Collection</button>
 
     <div ng-repeat="release in searchResultsArray">
+        <div class="release-card">
         <h6>{{release.title}}</h6>
         <h6>{{release.year}}</h6>
-        <img src="{{release.thumb}}"/>
+        <div><img src="{{release.thumb}}"/></span></div>
+        <div><button ng-click="addReleaseToBag(release.id)">Add This Release To Your Bag</button></div>
+        </div>
     </div>
-
 </div>

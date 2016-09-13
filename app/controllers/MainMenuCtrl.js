@@ -5,6 +5,7 @@ app.controller("MainMenuCtrl", function ($scope, AuthFactory, DiscogsFactory) {
     $scope.userAuthToken = {}
     $scope.searchTerm = ""
     $scope.searchResultsArray = []
+    $scope.bag = []
 
     $scope.getUserAccessTokens = () => {
         console.log("getting user access tokens")
@@ -40,6 +41,12 @@ app.controller("MainMenuCtrl", function ($scope, AuthFactory, DiscogsFactory) {
             $scope.searchResultsArray = searchResults.results
             console.log("searchResultsArray", $scope.searchResultsArray)
         })
+    }
+
+    $scope.addReleaseToBag = (releaseNumber) => {
+        console.log("releaseNumber", releaseNumber)
+        $scope.bag.push(releaseNumber)
+        console.log("bag", $scope.bag)
     }
 
 })
