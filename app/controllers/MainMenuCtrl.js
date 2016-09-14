@@ -10,6 +10,8 @@ app.controller("MainMenuCtrl", function ($scope, AuthFactory, DiscogsFactory) {
     $scope.mainMenuInit = () => {
         console.log("mainMenuInit running")
         $scope.getUserAccessTokens()
+        $scope.bag = DiscogsFactory.getBag()
+        console.log("mainMenuInit bag", $scope.bag)
     }
 
     $scope.getUserAccessTokens = () => {
@@ -31,7 +33,6 @@ app.controller("MainMenuCtrl", function ($scope, AuthFactory, DiscogsFactory) {
             AuthFactory.setUsername(data.username)
         })
     }
-
 
     $scope.addRickAstley = () => {
         DiscogsFactory.addReleaseByNumber(249504, $scope.userAuthToken)
