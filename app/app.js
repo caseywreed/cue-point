@@ -20,6 +20,10 @@ app.config(function ($routeProvider) {
             templateUrl: "partials/main.html",
             controller: "MainMenuCtrl"
         }).
+        when("/bag", {
+            templateUrl: "partials/bag.html",
+            controller: "BagCtrl"
+        }).
         otherwise('/')
 })
 

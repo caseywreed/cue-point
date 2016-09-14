@@ -7,6 +7,7 @@ app.factory("AuthFactory", function ($q, $http, DiscogsCreds, $window, $location
     let user_agent = "CuePoint/0.01 +https://github.com/caseywreed/cue-point"
     let userTokens = {}
     let url = "https://api.discogs.com/oauth/request_token"
+    let transferableUserTokens = {}
 
     let setUid = function (uid) {
         _uid = uid
@@ -24,6 +25,14 @@ app.factory("AuthFactory", function ($q, $http, DiscogsCreds, $window, $location
 
     let getUsername = function () {
         return _userName
+    }
+
+    let setTransferableUserTokens = (userTokens) => {
+        transferableUserTokens = userTokens
+    }
+
+    let getTransferableUserTokens = () => {
+        return transferableUserTokens
     }
 
     let createUser = function (userObj) {
@@ -204,6 +213,6 @@ app.factory("AuthFactory", function ($q, $http, DiscogsCreds, $window, $location
         })
     }
 
-    return {setUid, getUid, setUsername, getUsername, createUser, loginUser, discogsAuthCall, discogsVerifyCall, deleteTokensFromFirebase, getTokensFromFirebase, getUserAuthToken, findIdentity}
+    return {setUid, getUid, setTransferableUserTokens, getTransferableUserTokens, setUsername, getUsername, createUser, loginUser, discogsAuthCall, discogsVerifyCall, deleteTokensFromFirebase, getTokensFromFirebase, getUserAuthToken, findIdentity}
 
 })
