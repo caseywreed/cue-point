@@ -3,6 +3,9 @@
 app.controller("MainMenuCtrl", function ($scope, AuthFactory, DiscogsFactory) {
 
     $scope.userAuthToken = {}
+    $scope.searchTerm = ""
+    $scope.searchResultsArray = []
+    $scope.bag = []
 
     $scope.getUserAccessTokens = () => {
         console.log("getting user access tokens")
@@ -30,6 +33,20 @@ app.controller("MainMenuCtrl", function ($scope, AuthFactory, DiscogsFactory) {
 
     $scope.addRickAstley = () => {
         DiscogsFactory.addReleaseByNumber(249504, $scope.userAuthToken)
+    }
+
+    $scope.searchByCatNumber = () => {
+        DiscogsFactory.searchByCatNumber($scope.searchTerm, $scope.userAuthToken)
+        .then(function (searchResults) {
+            $scope.searchResultsArray = searchResults.results
+            console.log("searchResultsArray", $scope.searchResultsArray)
+        })
+    }
+
+    $scope.addReleaseToBag = (releaseNumber) => {
+        console.log("releaseNumber", releaseNumber)
+        $scope.bag.push(releaseNumber)
+        console.log("bag", $scope.bag)
     }
 
 })
