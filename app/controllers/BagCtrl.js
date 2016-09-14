@@ -7,7 +7,6 @@ app.controller("BagCtrl", function ($scope, DiscogsFactory, AuthFactory) {
     $scope.transferedUserTokens = {}
 
     $scope.bagCtrlInit = () => {
-        $scope.transferedUserTokens = AuthFactory.getTransferableUserTokens()
         $scope.getBagFromDiscogsFactory()
         $scope.loadBagToBagDisplay()
     }
@@ -18,18 +17,19 @@ app.controller("BagCtrl", function ($scope, DiscogsFactory, AuthFactory) {
     }
 
     $scope.loadBagToBagDisplay = () => {
-        $scope.bag.forEach(function (release_url) {
-            DiscogsFactory.searchByReleaseUrl(release_url)
-            .then( function (release) {
-                $scope.bagDisplay.push(release)
+        $scope.bag.forEach(function (release) {
+            DiscogsFactory.searchByReleaseUrl(release.resource_url)
+            .then( function (data) {
+                data.thumb = release.thumb
+                $scope.bagDisplay.push(data)
             })
         })
         console.log("$scope.bagDisplay", $scope.bagDisplay)
     }
 
     $scope.pushBagToDiscogs = () => {
-        $scope.bag.forEach(function (release) {
-            DiscogsFactory.addReleaseByNumber(release)
+        $scope.bagDisplay.forEach(function (release) {
+            DiscogsFactory.addReleaseByNumber(release.resource_url)
         })
     }
 

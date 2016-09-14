@@ -1,7 +1,13 @@
 <div ng-init="bagCtrlInit()">
     <h1>Your Bag</h1>
+    <button ng-click="pushBagToDiscogs()"></button>
     <div ng-repeat="release in bagDisplay">
-        {{release.title}}
-        {{release.lowest_price}}
+        <div class="release-card">
+            <img src="{{release.thumb}}">
+            <h6>{{release.title}}</h6>
+            <h6>{{release.year}}</h6>
+            <h6>Lowest Selling Price: {{release.lowest_price}}</h6>
+            <button ng-click="deleteReleaseFromBag">Delete Release From Bag</button>
+        </div>
     </div>
 </div>

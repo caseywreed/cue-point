@@ -45,9 +45,14 @@ app.controller("MainMenuCtrl", function ($scope, AuthFactory, DiscogsFactory) {
         })
     }
 
-    $scope.addReleaseToBag = (resource_url) => {
+    $scope.addReleaseToBag = (resource_url, thumb) => {
         console.log("resource_url", resource_url)
-        $scope.bag.push(resource_url)
+        console.log("thumb", thumb)
+        let releaseObj = {
+            resource_url: resource_url,
+            thumb: thumb
+        }
+        $scope.bag.push(releaseObj)
         console.log("bag", $scope.bag)
         DiscogsFactory.setBag($scope.bag)
     }
