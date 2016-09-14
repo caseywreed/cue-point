@@ -10,7 +10,6 @@ app.controller("BagCtrl", function ($scope, DiscogsFactory, AuthFactory) {
         $scope.getBagFromDiscogsFactory()
         $scope.loadBagToBagDisplay()
         $scope.transferedUserTokens = AuthFactory.getTransferableUserTokens()
-        console.log("$scope.transferedUserTokens in BagCtrl", $scope.transferedUserTokens)
     }
 
     $scope.getBagFromDiscogsFactory = () => {
@@ -33,6 +32,21 @@ app.controller("BagCtrl", function ($scope, DiscogsFactory, AuthFactory) {
         $scope.bagDisplay.forEach(function (release) {
             DiscogsFactory.addReleaseByNumber(release.id, $scope.transferedUserTokens)
         })
+    }
+
+    $scope.deleteReleaseFromBag = (release) => {
+        let spliceIndex = $scope.bagDisplay.indexOf(release)
+        $scope.bagDisplay.splice(spliceIndex, spliceIndex)
+        $scope.bag = []
+        $scope.bagDisplay.forEach(function (release) {
+            let tempReleaseObj = {
+                resource_url: release.resource_url,
+                thumb: release.thumb
+            }
+            $scope.bag.push(tempReleaseObj)
+        })
+        console.log("$scope.bag in BagCtrl", $scope.bag)
+        DiscogsFactory.setBag($scope.bag)
     }
 
 })
