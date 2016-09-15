@@ -30,6 +30,12 @@ app.factory("DiscogsFactory", function ($q, $http, AuthFactory) {
         })
     }
 
+    let addReleaseByNumberPromiseAll = (bagDisplay, userToken) => {
+        return $q.all(bagDisplay.map(function (release) {
+            return addReleaseByNumber(release.id, userToken)
+        }))
+    }
+
     let searchByReleaseUrl = (release_url) => {
         let timestamp = Date.now()
         console.log("userAuthTokens in searchByReleaseUrl")
@@ -61,6 +67,6 @@ app.factory("DiscogsFactory", function ($q, $http, AuthFactory) {
         })
     }
 
-    return {addReleaseByNumber, searchByReleaseUrl, searchByCatNumber, setBag, getBag}
+    return {addReleaseByNumber, addReleaseByNumberPromiseAll, searchByReleaseUrl, searchByCatNumber, setBag, getBag}
 
 })
