@@ -28,8 +28,8 @@ app.controller("CueLoginCtrl", function ($scope, $window, $location, AuthFactory
         AuthFactory.loginUser($scope.account)
         .then( (data) => {
             if (data) {
-            $window.location.href = "#/discogs-login"
             AuthFactory.setUid(data.uid)
+            $window.location.href = "#/discogs-login"
             } else {
             console.log("inside login's ELSE block")
             $window.location.href = "#/login"
