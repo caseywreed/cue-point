@@ -107,7 +107,7 @@ app.factory("AuthFactory", function ($q, $http, DiscogsCreds, $window, $location
             .success((data) => {
                 console.log(data)
                 sendUsersAuthTokensToFirebase(data)
-                resolve(data)
+                .then(() => resolve(data))
             })
             .error((error) => {
                 reject(error)

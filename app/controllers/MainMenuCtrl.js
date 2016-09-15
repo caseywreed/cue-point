@@ -9,8 +9,6 @@ app.controller("MainMenuCtrl", function ($scope, AuthFactory, DiscogsFactory) {
 
     $scope.mainMenuInit = () => {
         console.log("mainMenuInit running")
-        // Get UID from local storage
-        //
         $scope.getUserAccessTokens()
         $scope.bag = DiscogsFactory.getBag()
         console.log("mainMenuInit bag", $scope.bag)
