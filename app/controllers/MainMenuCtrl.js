@@ -23,6 +23,7 @@ app.controller("MainMenuCtrl", function ($scope, AuthFactory, DiscogsFactory) {
             $scope.userAuthToken = data[key]
             console.log("$scope.userAuthToken from getUserAccessTokens", $scope.userAuthToken)
             AuthFactory.setTransferableUserTokens($scope.userAuthToken)
+            $scope.findUserIdentity()
         })
     }
 
