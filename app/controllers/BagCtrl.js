@@ -1,6 +1,6 @@
 "use strict";
 
-app.controller("BagCtrl", function ($scope, DiscogsFactory, AuthFactory) {
+app.controller("BagCtrl", function ($scope, $location, $q, DiscogsFactory, AuthFactory) {
 
     $scope.bag = []
     $scope.bagDisplay = []
@@ -28,9 +28,18 @@ app.controller("BagCtrl", function ($scope, DiscogsFactory, AuthFactory) {
         console.log("$scope.bagDisplay", $scope.bagDisplay)
     }
 
+    // $scope.pushBagToDiscogs = () => {
+    //     $scope.bagDisplay.forEach(function (release) {
+    //         DiscogsFactory.addReleaseByNumber(release.id, $scope.transferedUserTokens)
+    //     })
+    // }
+
     $scope.pushBagToDiscogs = () => {
-        $scope.bagDisplay.forEach(function (release) {
-            DiscogsFactory.addReleaseByNumber(release.id, $scope.transferedUserTokens)
+        DiscogsFactory.addReleaseByNumberPromiseAll($scope.bagDisplay, $scope.transferedUserTokens)
+        .then(function () {
+            $scope.bag = []
+            DiscogsFactory.setBag($scope.bag)
+            $location.url("/main")
         })
     }
 
