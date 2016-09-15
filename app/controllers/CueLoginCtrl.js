@@ -11,6 +11,14 @@ app.controller("CueLoginCtrl", function ($scope, $window, $location, AuthFactory
 
     let oauthToken = null
 
+    $scope.cueLoginInit = () => {
+        if ($location.$$absUrl.length > 40) {
+            $scope.checkForAuthToken()
+        } else {
+            console.log("Login screen running")
+        }
+    }
+
     $scope.register = () => {
         console.log("you clicked register")
         AuthFactory.createUser({
@@ -38,30 +46,6 @@ app.controller("CueLoginCtrl", function ($scope, $window, $location, AuthFactory
             }
         })
     }
-
-    // $scope.checkForAuthToken = function () {
-    //     console.log("checkForAuthToken running")
-    //     let url = $location.$$absUrl
-    //     let splitUrl = url.split("&")
-    //     let verifyToken = splitUrl[1].split("#")
-    //     let userVerifyCode = verifyToken[0].split("=")
-    //     let finalUserVerifyCode = userVerifyCode[1]
-    //     AuthFactory.getTokensFromFirebase()
-    //     .then(function (data) {
-    //         $scope.appTokens = data.data
-    //         let keyArray = Object.keys($scope.appTokens)
-    //         let oauthToken = keyArray.map((key) => {
-    //             return $scope.appTokens[key]
-    //         })
-    //         AuthFactory.deleteTokensFromFirebase()
-    //         .then ( function () {
-    //             AuthFactory.discogsVerifyCall(oauthToken[0], finalUserVerifyCode)
-    //             .then ( function () {
-    //                 $window.location.href = `/#/main`
-    //             })
-    //         })
-    //     })
-    // }
 
     $scope.checkForAuthToken = function () {
         console.log("checkForAuthToken running")

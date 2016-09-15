@@ -221,6 +221,9 @@ app.factory("AuthFactory", function ($q, $http, DiscogsCreds, $window, $location
         })
     }
 
-    return {setUid, getUid, getUidFromLocalStorage, setTransferableUserTokens, getTransferableUserTokens, setUsername, getUsername, createUser, loginUser, discogsAuthCall, discogsVerifyCall, deleteTokensFromFirebase, getTokensFromFirebase, getUserAuthToken, findIdentity}
+    return {setUid, getUid, getUidFromLocalStorage, setTransferableUserTokens,
+        getTransferableUserTokens, setUsername, getUsername, createUser, loginUser,
+        discogsAuthCall, discogsVerifyCall, deleteTokensFromFirebase, getTokensFromFirebase,
+        getUserAuthToken, findIdentity}
 
 })
