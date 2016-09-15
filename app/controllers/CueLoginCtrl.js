@@ -9,6 +9,8 @@ app.controller("CueLoginCtrl", function ($scope, $window, $location, AuthFactory
 
     $scope.appTokens = null
 
+    let oauthToken = null
+
     $scope.register = () => {
         console.log("you clicked register")
         AuthFactory.createUser({
@@ -37,6 +39,30 @@ app.controller("CueLoginCtrl", function ($scope, $window, $location, AuthFactory
         })
     }
 
+    // $scope.checkForAuthToken = function () {
+    //     console.log("checkForAuthToken running")
+    //     let url = $location.$$absUrl
+    //     let splitUrl = url.split("&")
+    //     let verifyToken = splitUrl[1].split("#")
+    //     let userVerifyCode = verifyToken[0].split("=")
+    //     let finalUserVerifyCode = userVerifyCode[1]
+    //     AuthFactory.getTokensFromFirebase()
+    //     .then(function (data) {
+    //         $scope.appTokens = data.data
+    //         let keyArray = Object.keys($scope.appTokens)
+    //         let oauthToken = keyArray.map((key) => {
+    //             return $scope.appTokens[key]
+    //         })
+    //         AuthFactory.deleteTokensFromFirebase()
+    //         .then ( function () {
+    //             AuthFactory.discogsVerifyCall(oauthToken[0], finalUserVerifyCode)
+    //             .then ( function () {
+    //                 $window.location.href = `/#/main`
+    //             })
+    //         })
+    //     })
+    // }
+
     $scope.checkForAuthToken = function () {
         console.log("checkForAuthToken running")
         let url = $location.$$absUrl
@@ -48,15 +74,17 @@ app.controller("CueLoginCtrl", function ($scope, $window, $location, AuthFactory
         .then(function (data) {
             $scope.appTokens = data.data
             let keyArray = Object.keys($scope.appTokens)
-            let oauthToken = keyArray.map((key) => {
+            oauthToken = keyArray.map((key) => {
                 return $scope.appTokens[key]
             })
-            AuthFactory.deleteTokensFromFirebase()
-            .then ( function () {
-                AuthFactory.discogsVerifyCall(oauthToken[0], finalUserVerifyCode)
+            return AuthFactory.deleteTokensFromFirebase()
             })
-        })
-        $window.location.href = `/#/main`;
+            .then ( function () {
+                return AuthFactory.discogsVerifyCall(oauthToken[0], finalUserVerifyCode)
+            .then ( function () {
+                $location.url("/main")
+                })
+            })
     }
 
 

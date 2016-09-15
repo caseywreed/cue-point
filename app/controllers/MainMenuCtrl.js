@@ -9,6 +9,8 @@ app.controller("MainMenuCtrl", function ($scope, AuthFactory, DiscogsFactory) {
 
     $scope.mainMenuInit = () => {
         console.log("mainMenuInit running")
+        // Get UID from local storage
+        //
         $scope.getUserAccessTokens()
         $scope.bag = DiscogsFactory.getBag()
         console.log("mainMenuInit bag", $scope.bag)
@@ -16,13 +18,13 @@ app.controller("MainMenuCtrl", function ($scope, AuthFactory, DiscogsFactory) {
 
     $scope.getUserAccessTokens = () => {
         console.log("getting user access tokens")
+        AuthFactory.getUidFromLocalStorage()
         AuthFactory.getUserAuthToken(AuthFactory.getUid())
         .then( function (data) {
             let key = Object.keys(data)
             $scope.userAuthToken = data[key]
             console.log("$scope.userAuthToken from getUserAccessTokens", $scope.userAuthToken)
             AuthFactory.setTransferableUserTokens($scope.userAuthToken)
-            $scope.findUserIdentity()
         })
     }
 
