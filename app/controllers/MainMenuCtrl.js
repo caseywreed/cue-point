@@ -16,6 +16,7 @@ app.controller("MainMenuCtrl", function ($scope, AuthFactory, DiscogsFactory) {
 
     $scope.getUserAccessTokens = () => {
         console.log("getting user access tokens")
+        AuthFactory.getUidFromLocalStorage()
         AuthFactory.getUserAuthToken(AuthFactory.getUid())
         .then( function (data) {
             let key = Object.keys(data)

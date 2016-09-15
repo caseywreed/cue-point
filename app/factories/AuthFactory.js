@@ -11,10 +11,18 @@ app.factory("AuthFactory", function ($q, $http, DiscogsCreds, $window, $location
 
     let setUid = function (uid) {
         _uid = uid
+        $window.localStorage.clear()
+        $window.localStorage.setItem("uid", _uid)
         console.log("_uid", _uid)
     }
 
     let getUid = function () {
+        return _uid
+    }
+
+    let getUidFromLocalStorage = () => {
+        _uid = $window.localStorage.getItem("uid")
+        console.log("localStorageUid", _uid)
         return _uid
     }
 
@@ -99,7 +107,7 @@ app.factory("AuthFactory", function ($q, $http, DiscogsCreds, $window, $location
             .success((data) => {
                 console.log(data)
                 sendUsersAuthTokensToFirebase(data)
-                resolve(data)
+                .then(() => resolve(data))
             })
             .error((error) => {
                 reject(error)
@@ -153,7 +161,7 @@ app.factory("AuthFactory", function ($q, $http, DiscogsCreds, $window, $location
         return $q((resolve,reject) => {
             $http.get('https://cue-point.firebaseio.com/token.json')
             .then((data) => {
-                console.log(data)
+                console.log("getTokensFromFirebase success", data)
                 resolve(data)
             }),(error) => {
                 console.error(error)
@@ -213,6 +221,6 @@ app.factory("AuthFactory", function ($q, $http, DiscogsCreds, $window, $location
         })
     }
 
-    return {setUid, getUid, setTransferableUserTokens, getTransferableUserTokens, setUsername, getUsername, createUser, loginUser, discogsAuthCall, discogsVerifyCall, deleteTokensFromFirebase, getTokensFromFirebase, getUserAuthToken, findIdentity}
+    return {setUid, getUid, getUidFromLocalStorage, setTransferableUserTokens, getTransferableUserTokens, setUsername, getUsername, createUser, loginUser, discogsAuthCall, discogsVerifyCall, deleteTokensFromFirebase, getTokensFromFirebase, getUserAuthToken, findIdentity}
 
 })

@@ -36,7 +36,7 @@ app.controller("BagCtrl", function ($scope, DiscogsFactory, AuthFactory) {
 
     $scope.deleteReleaseFromBag = (release) => {
         let spliceIndex = $scope.bagDisplay.indexOf(release)
-        $scope.bagDisplay.splice(spliceIndex, spliceIndex)
+        $scope.bagDisplay.splice(spliceIndex, 1)
         $scope.bag = []
         $scope.bagDisplay.forEach(function (release) {
             let tempReleaseObj = {
